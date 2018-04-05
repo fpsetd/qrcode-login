@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<title>授权登录</title>
+		<link rel="stylesheet" th:href="@{/static/css/m_authorize.css}">
+	</head>
+	<body>
+		<div class="container">
+			<header class="icon">
+				<img th:src="@{/static/images/pc_icon.png}">
+			</header>
+			<section>
+				<article class="message">
+					<p th:inline="text">您的账号正试图在一台电脑([[${ipAddr}]])登录，请选择是否允许。</p>
+				</article>
+				<article class="ctrl">
+					<button data-agree="true">允许登录</button>
+					<button data-agree="false">拒绝</button>
+				</article>
+			</section>
+		</div>
+	</body>
+	<script type="text/javascript" th:src="@{/static/js/errorCode.js}"></script>
+	<script th:inline="javascript">
+		(function (win, doc) {
+			const ctx = /*[[@{/}]]*/;
+			const xhr = new XMLHttpRequest();
+			doc.querySelectorAll('.ctrl button').forEach(button => {
+				button.addEventListener('click', function () {
+					xhr.open('post', `${ctx}user/qrlogin/authorize`, true);
+					xhr.responseType = "json";
+					xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+					xhr.onload = function () {
+						if (this.status === 200 || this.status === 302) {
+							const response = this.response;
+							if (response.success) {
+								win.location.href = `${ctx}user/home`;
+							} else {
+								alert(ERR[response.code]);
+							}
+						}
+					};
+					xhr.send(`agree=${this.dataset.agree}`);
+				});
+			});
+		})(window, document);
+	</script>
+</html>

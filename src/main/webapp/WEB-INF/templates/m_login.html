@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/static/css/m_login.css}">
+	</head>
+	<body>
+		<div class="container">
+			<form id="login">
+				<label class="field">
+					<input name="account" placeholder="请输入用户名" autocomplete="off" required autofocus>
+				</label>
+				<label class="field">
+					<input type="password" name="password" placeholder="请输入密码" required>
+				</label>
+				<div class="ctrl">
+					<label class="remember-me">
+						<input type="checkbox">
+						<span>记住密码</span>
+					</label>
+					<button class="login-btn">登录</button>
+				</div>
+			</form>
+		</div>
+	</body>
+	<script type="text/javascript" th:src="@{/static/js/login.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/errorCode.js}"></script>
+	<script th:inline="javascript">
+		const ctx = /*[[@{/}]]*/;
+	</script>
+</html>

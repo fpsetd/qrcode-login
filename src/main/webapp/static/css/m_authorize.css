@@ -1,0 +1,36 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 86%;
+	margin: 60px auto;
+}
+
+.container > .icon {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.message {
+	color: #777;
+	text-align: center;
+	margin-bottom: 60px;
+}
+
+.ctrl > button {
+	display: block;
+	margin-bottom: 18px;
+	padding: 12px 0;
+	width: 100%;
+	color: #fff;
+	font-size: 15px;
+	border: none;
+	border-radius: 3px;
+	background-color: #20b7e6;
+}
+
+.ctrl > button:last-child {
+	background-color: #e45a58;
+}

@@ -1,7 +1,5 @@
 package com.qrcode.login.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +18,12 @@ public class UserService {
 		return userRepository.findById(id).orElse(null);
 	}
 
-	public List<User> findAll() {
-		return userRepository.findAll();
+	public String getAvatar(String account) {
+		return userRepository.findAvatarByAccount(account).orElse("");
+	}
+
+	public Integer login(String account, String password) {
+		User user = userRepository.findByAccount(account).orElse(null);
+		return (user != null && user.getPassword().equals(password)) ? user.getId() : null;
 	}
 }

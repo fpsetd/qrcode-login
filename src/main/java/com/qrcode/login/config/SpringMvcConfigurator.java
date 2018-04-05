@@ -15,9 +15,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 @Configuration
 public class SpringMvcConfigurator implements WebMvcConfigurer {
 
-	/**
-	 * 静态资源映射
-	 */
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");

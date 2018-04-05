@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/static/css/login.css}">
+	</head>
+	<body>
+		<div class="container">
+			<div class="warpper">
+				<div class="login-box">
+					<div class="title">
+						<h4>Please Enter Your Information</h4>
+					</div>
+					<div class="avatar">
+						<img th:src="@{/static/images/default.jpeg}" draggable="false">
+					</div>
+					<div class="form-input">
+						<form id="login">
+							<label class="field">
+								<input name="account" placeholder="Username" autocomplete="off" required autofocus>
+							</label>
+							<label class="field">
+								<input type="password" name="password" placeholder="Password" required>
+							</label>
+							<div class="ctrl">
+								<label class="remember-me">
+									<input type="checkbox">
+									<span>Remember Me</span>
+								</label>
+								<div class="login-btn">
+									<button>Login</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<span class="qrcode-login">
+						<img th:src="@{/static/images/f029.png}">
+					</span>
+				</div>
+				<div class="qrcode-box">
+					<div class="back">
+						<span>《 Back</span>
+					</div>
+					<div class="qrcode">
+						<div id="qrcode"></div>
+					</div>
+				</div>
+				<div class="scan-result">
+					<div class="back">
+						<span style="display: none;">《 Back</span>
+					</div>
+					<div class="icon">
+						<img th:src="@{/static/images/success.png}">
+					</div>
+					<div class="message">
+						<p>请在手机确认完成登录</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" th:src="@{/static/js/qrcode.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/login.js}"></script>
+	<script type="text/javascript" th:src="@{/static/js/errorCode.js}"></script>
+	<script th:inline="javascript">
+		const ctx = /*[[@{/}]]*/;
+		let socket = null;
+		let qrcode = new QRCode(document.getElementById('qrcode'), {
+			height: 290,
+			width: 290,
+			colorLight: '#f7f7f7'
+		});
+		let avatarEle = document.querySelector('.avatar img');
+		let warpper = document.querySelector('.warpper');
+		document.querySelector('input[name=account]').addEventListener('blur', function () {
+			if (this.value) {
+				// open 应该放在设置 responseType 之上，否则会因为 readyState 为 DONE 而不能设置 responseType
+				xhr.open('get', `${ctx}user/avatar/${this.value}`, true);
+				xhr.responseType = "text";
+				xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded');
+				xhr.onload = function () {
+					if (this.status === 200 || this.status === 302) {
+						avatarEle.src = this.response ? `${ctx}${this.response}` : `${ctx}static/images/default.jpeg`;
+					}
+				};
+				xhr.send();
+			} else {
+				avatarEle.src = `${ctx}static/images/default.jpeg`;
+			}
+		});
+		document.querySelector('.qrcode-login').addEventListener('click', function () {
+			socket = new WebSocket(`ws://${window.location.host}/websocket/login`);
+			socket.onmessage = function (e) {
+				const data = JSON.parse(e.data);
+				switch (data.action) {
+				case 'connect':
+					qrcode.clear();
+					qrcode.makeCode(`${window.location.origin}/user/qrlogin/authorize?sid=${data.sid}`);
+					warpper.style.animationName = 'show-qrcode';
+					break;
+				case 'scanCode':
+					warpper.style.animationName = 'scan-completed';
+					break;
+				case 'agree':
+					window.location.href = `${ctx}user/home`;
+					break;
+				case 'refuse':
+					document.querySelector('.scan-result > .back > span').style.display = 'inline';
+					document.querySelector('.scan-result > .icon > img').src = `${ctx}static/images/refuse.png`;
+					document.querySelector('.scan-result > .message > p').innerHTML = '你被无情地拒绝了';
+					socket && socket.close();
+					break;
+				default:
+					console.log(data);
+				}
+			};
+		});
+		document.querySelector('.qrcode-box > .back > span').addEventListener('click', function () {
+			warpper.style.animationName = 'cancel-qrlogin';
+			socket && socket.close();
+		});
+		document.querySelector('.scan-result > .back > span').addEventListener('click', function () {
+			warpper.style.animationName = 'back-login';
+			setTimeout(() => {
+				// 箭头函数中的 this 指向的是父级作用域而不是函数调用者
+				this.style.display = 'none';
+				document.querySelector('.scan-result > .icon > img').src = `${ctx}static/images/success.png`;
+				document.querySelector('.scan-result > .message > p').innerHTML = '请在手机确认完成登录';
+			}, 200);
+		});
+	</script>
+</html>

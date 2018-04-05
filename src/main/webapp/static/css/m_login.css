@@ -1,0 +1,52 @@
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
+
+.container {
+	width: 86%;
+	margin: 80px auto 0;
+}
+
+.field {
+	display: block;
+}
+
+.field > input {
+	width: 100%;
+	border: none;
+	border-bottom: 2px solid #b8b8b8;
+	margin-bottom: 16px;
+	font-size: 18px;
+	padding: 3px 5px;
+	box-sizing: border-box;
+	transition: border-bottom-color 200ms linear;
+}
+
+.field > input:focus {
+	border-bottom-color: #fb6666;
+}
+
+.ctrl {
+	padding-top: 12px;
+	font-size: 14px;
+}
+
+.remember-me > input[type=checkbox] {
+	position: relative;
+	top: 2px;
+	height: 14px;
+	width: 14px;
+}
+
+.login-btn {
+	float: right;
+	font-size: 16px;
+	font-weight: bold;
+	color: #555;
+	padding: 8px 28px;
+	background-color: #d7d7d7;
+	border: none;
+	box-shadow: 0 1px 1px 1px #d7d7d7;
+}
