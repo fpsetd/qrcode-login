@@ -1,17 +1,17 @@
 package com.qrcode.login.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.qrcode.login.entity.User;
+import com.qrcode.login.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.qrcode.login.entity.User;
-import com.qrcode.login.repository.UserRepository;
+import javax.annotation.Resource;
 
 @Service
 @Transactional
 public class UserService {
 
-	@Autowired
+	@Resource
 	private UserRepository userRepository;
 
 	public User findById(Integer id) {
@@ -19,11 +19,12 @@ public class UserService {
 	}
 
 	public String getAvatar(String account) {
-		return userRepository.findAvatarByAccount(account).orElse("");
+		User user = userRepository.findByAccount(account);
+		return user != null ? user.getAvatar() : "";
 	}
 
 	public Integer login(String account, String password) {
-		User user = userRepository.findByAccount(account).orElse(null);
+		User user = userRepository.findByAccount(account);
 		return (user != null && user.getPassword().equals(password)) ? user.getId() : null;
 	}
 }

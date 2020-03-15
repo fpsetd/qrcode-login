@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
 		<title>登录</title>
@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="warpper">
+			<div class="wrapper">
 				<div class="login-box">
 					<div class="title">
 						<h4>Please Enter Your Information</h4>
@@ -72,7 +72,7 @@
 			colorLight: '#f7f7f7'
 		});
 		let avatarEle = document.querySelector('.avatar img');
-		let warpper = document.querySelector('.warpper');
+		let wrapper = document.querySelector('.wrapper');
 		document.querySelector('input[name=account]').addEventListener('blur', function () {
 			if (this.value) {
 				// open 应该放在设置 responseType 之上，否则会因为 readyState 为 DONE 而不能设置 responseType
@@ -97,10 +97,10 @@
 				case 'connect':
 					qrcode.clear();
 					qrcode.makeCode(`${window.location.origin}/user/qrlogin/authorize?sid=${data.sid}`);
-					warpper.style.animationName = 'show-qrcode';
+					wrapper.style.animationName = 'show-qrcode';
 					break;
 				case 'scanCode':
-					warpper.style.animationName = 'scan-completed';
+					wrapper.style.animationName = 'scan-completed';
 					break;
 				case 'agree':
 					window.location.href = `${ctx}user/home`;
@@ -117,11 +117,11 @@
 			};
 		});
 		document.querySelector('.qrcode-box > .back > span').addEventListener('click', function () {
-			warpper.style.animationName = 'cancel-qrlogin';
+			wrapper.style.animationName = 'cancel-qrlogin';
 			socket && socket.close();
 		});
 		document.querySelector('.scan-result > .back > span').addEventListener('click', function () {
-			warpper.style.animationName = 'back-login';
+			wrapper.style.animationName = 'back-login';
 			setTimeout(() => {
 				// 箭头函数中的 this 指向的是父级作用域而不是函数调用者
 				this.style.display = 'none';

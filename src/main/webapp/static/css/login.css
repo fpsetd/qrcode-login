@@ -16,7 +16,7 @@ html {
 	overflow: hidden;
 }
 
-.warpper {
+.wrapper {
 	position: relative;
 	display: flex;
 	justify-content: left;
@@ -26,7 +26,7 @@ html {
 	animation-fill-mode: forwards;
 }
 
-.warpper > div {
+.wrapper > div {
 	width: 292px;
 	padding: 24px 36px 18px;
 	background-color: #f7f7f7;
@@ -88,6 +88,8 @@ html {
 .remember-me > input {
 	height: 16px;
 	width: 16px;
+	position: relative;
+	top: 3px;
 }
 
 .remember-me > span {

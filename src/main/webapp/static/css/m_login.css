@@ -36,8 +36,12 @@
 .remember-me > input[type=checkbox] {
 	position: relative;
 	top: 2px;
-	height: 14px;
-	width: 14px;
+	height: 16px;
+	width: 16px;
+}
+
+.remember-me > span {
+	font-size: large;
 }
 
 .login-btn {

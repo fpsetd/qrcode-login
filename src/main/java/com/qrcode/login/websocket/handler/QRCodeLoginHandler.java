@@ -1,14 +1,10 @@
 package com.qrcode.login.websocket.handler;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.socket.*;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.stereotype.Component;
-import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketHandler;
-import org.springframework.web.socket.WebSocketMessage;
-import org.springframework.web.socket.WebSocketSession;
 
 @Component
 public class QRCodeLoginHandler implements WebSocketHandler {
@@ -18,7 +14,7 @@ public class QRCodeLoginHandler implements WebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		container.put(session.getId(), session);
-		// XXX 可考虑对 sid 进行对称加密
+		// 之前的sid是一个16进制递增的数字，为消除连续性，新版String将sid改为了uuid形式
 		session.sendMessage(new TextMessage(String.format("{\"action\": \"connect\", \"sid\": \"%s\"}", session.getId())));
 	}
 

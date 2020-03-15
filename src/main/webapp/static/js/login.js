@@ -21,7 +21,7 @@ document.querySelector('#login').addEventListener('submit', function (e) {
 					alert(ERR[response.code]);
 				}
 			}
-		}
+		};
 		xhr.send(formSerializer(this));
 	}
 });
@@ -29,7 +29,7 @@ document.querySelector('#login').addEventListener('submit', function (e) {
 //将 form 表单中的字段序列化为 queryString
 function formSerializer (form) {
 	let arr = [];
-	for (let i = 0, input; input = form.elements[i]; i++) {
+	for (let i = 0, input; (input = form.elements[i]); i++) {
 		if (input.name) {
 			arr.push(`${input.name}=${input.value}`);
 		}
