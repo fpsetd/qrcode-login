@@ -14,7 +14,7 @@ public class QRCodeLoginHandler implements WebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		container.put(session.getId(), session);
-		// 之前的sid是一个16进制递增的数字，为消除连续性，新版String将sid改为了uuid形式
+		// 之前的sid是一个以16进制递增的数字字符串，为消除连续性，新版Spring将sid改为了uuid形式
 		session.sendMessage(new TextMessage(String.format("{\"action\": \"connect\", \"sid\": \"%s\"}", session.getId())));
 	}
 

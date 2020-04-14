@@ -26,4 +26,16 @@ public class User {
 	private String password;
 
 	private String avatar;
+
+	@Column(nullable = false)
+	private String color;
+
+	@Column(nullable = false)
+	private String position;
+
+	private int follow;
+
+	private int fans;
+
+	private int actions;
 }

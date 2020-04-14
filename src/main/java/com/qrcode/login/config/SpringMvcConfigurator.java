@@ -18,6 +18,7 @@ public class SpringMvcConfigurator implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/**").addResourceLocations("/static/");
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("/static/images/favicon.ico");
 	}
 
 	@Bean

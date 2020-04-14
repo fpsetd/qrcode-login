@@ -78,15 +78,15 @@ public class UserController {
 	@GetMapping("/logout")
 	public ModelAndView logout(HttpServletRequest request) {
 		request.getSession().invalidate();
-		ModelAndView model = new ModelAndView("redirect:/user/login");
-		return model;
+		return new ModelAndView("redirect:/user/login");
 	}
 
 	@GetMapping("/qrlogin/authorize")
 	public ModelAndView qrcodeLogin(@RequestParam String sid, HttpServletRequest request) throws IOException {
+		WebSocketSession socketSession = QRCodeLoginHandler.getSession(sid);
+		if (socketSession == null) return new ModelAndView("redirect:/user/logout");
 		ModelAndView model = new ModelAndView("m_authorize");
 		request.getSession().setAttribute("sessionId", sid);
-		WebSocketSession socketSession = QRCodeLoginHandler.getSession(sid);
 		socketSession.sendMessage(new TextMessage("{\"action\": \"scanCode\"}"));
 		model.addObject("ipAddr", socketSession.getAttributes().get("ipAddr"));
 		return model;
@@ -96,10 +96,10 @@ public class UserController {
 	public Map<String, Object> authorize(boolean agree, HttpServletRequest request) throws IOException {
 		Map<String, Object> res = new HashMap<>();
 		Integer userId = (Integer) request.getSession().getAttribute("userId");
-		if (userId != null) {
+		String sessionId = (String) request.getSession().getAttribute("sessionId");
+		WebSocketSession socketSession = QRCodeLoginHandler.getSession(sessionId);
+		if (userId != null && socketSession != null) {
 			res.put("success", true);
-			String sessionId = (String) request.getSession().getAttribute("sessionId");
-			WebSocketSession socketSession = QRCodeLoginHandler.getSession(sessionId);
 			if (agree) {
 				HttpSession httpSession = (HttpSession) socketSession.getAttributes().get("httpSession");
 				httpSession.setAttribute("userId", userId);

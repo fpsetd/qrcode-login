@@ -3,9 +3,35 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" th:href="@{/static/css/m_home.css}">
 		<title th:inline="text">欢迎，[[${user.nickname}]]</title>
 	</head>
-	<body>
-		<p th:inline="text">Hello [[${user.nickname}]]!</p>
+	<body th:style="'background-color: ' + ${user.color}">
+		<div class="container">
+			<div class="info-header">
+				<a th:href="@{/user/logout}" class="exit"><img th:src="@{/static/images/m_exit.png}" alt="exit"></a>
+				<div class="header-title">
+					<div class="avatar-box"><img th:src="${#httpServletRequest.getContextPath() + '/' + user.avatar}" alt="avatar"></div>
+					<div class="user-title">
+						<span th:text="${user.nickname}">卡比兽</span>
+						<p>这个人很懒，什么都没有留下。</p>
+					</div>
+				</div>
+				<div class="base-info">
+					<div>
+						<p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.follow)}">1,267</p>
+						<p class="title">关注数</p>
+					</div>
+					<div>
+						<p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.fans)}">1,267</p>
+						<p class="title">粉丝数</p>
+					</div>
+					<div>
+						<p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.actions)}">1,267</p>
+						<p class="title">动态</p>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

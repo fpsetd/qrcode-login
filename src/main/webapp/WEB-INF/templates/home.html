@@ -1,10 +1,39 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<title th:inline="text">欢迎，[[${user.nickname}]]</title>
-	</head>
-	<body>
-		<p th:inline="text">Hello [[${user.nickname}]]!</p>
-	</body>
+<head>
+	<meta charset="UTF-8">
+	<title th:inline="text">欢迎，[[${user.nickname}]]</title>
+	<link rel="stylesheet" th:href="@{/static/css/home.css}">
+</head>
+<body>
+<div class="container">
+	<div class="user-info">
+		<div class="info-title" th:style="'background-color: ' + ${user.color}">
+			<div class="info-header">
+				<i class="back"><img th:src="@{/static/images/back.png}" alt="back"></i><span class="title">Profile</span><a th:href="@{/user/logout}" class="exit"><img th:src="@{/static/images/exit.png}" alt="exit"></a>
+			</div>
+			<div class="avatar-box">
+				<img th:src="${#httpServletRequest.getContextPath() + '/' + user.avatar}" alt="avatar">
+			</div>
+		</div>
+		<div class="info-nickname">
+			<span th:text="${user.nickname}">卡比兽</span>
+		</div>
+		<div class="info-position">
+			<i><img th:src="@{/static/images/position.png}" alt="position"></i><span class="position" th:inline="text">[[${user.position}]]&nbsp;&nbsp;</span>
+		</div>
+		<div class="info-social">
+			<div>
+				<p class="title">关注数</p><p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.follow)}">1,267</p>
+			</div>
+			<div class="center">
+				<p class="title">粉丝数</p><p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.fans)}">1,267</p>
+			</div>
+			<div>
+				<p class="title">动态</p><p th:text="${T(com.qrcode.login.util.NumberFormatUtils).formatInteger(user.actions)}">1,267</p>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
 </html>
