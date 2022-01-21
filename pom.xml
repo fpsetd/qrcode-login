@@ -22,7 +22,7 @@
         <jackson-databind.version>2.10.3</jackson-databind.version>
         <spring-data-jpa.version>2.2.5.RELEASE</spring-data-jpa.version>
         <hibernate.version>5.4.12.Final</hibernate.version>
-        <h2-database.version>1.4.200</h2-database.version>
+        <h2-database.version>2.1.210</h2-database.version>
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
