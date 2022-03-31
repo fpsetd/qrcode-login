@@ -15,7 +15,7 @@
         <junit.version>4.13</junit.version>
         <slf4j-log4j12.version>1.7.30</slf4j-log4j12.version>
         <lombok.version>1.18.12</lombok.version>
-        <spring.version>5.2.4.RELEASE</spring.version>
+        <spring.version>5.3.18</spring.version>
         <servlet.version>4.0.1</servlet.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <thymeleaf-spring5.version>3.0.11.RELEASE</thymeleaf-spring5.version>
