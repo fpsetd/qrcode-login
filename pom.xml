@@ -19,7 +19,7 @@
         <servlet.version>4.0.1</servlet.version>
         <commons-lang3.version>3.9</commons-lang3.version>
         <thymeleaf-spring5.version>3.0.11.RELEASE</thymeleaf-spring5.version>
-        <jackson-databind.version>2.10.3</jackson-databind.version>
+        <jackson-databind.version>2.12.6.1</jackson-databind.version>
         <spring-data-jpa.version>2.2.5.RELEASE</spring-data-jpa.version>
         <hibernate.version>5.4.12.Final</hibernate.version>
         <h2-database.version>1.4.200</h2-database.version>
